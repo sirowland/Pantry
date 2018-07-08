@@ -3,37 +3,34 @@ import PropTypes from 'prop-types';
 import {
   PantryContainer,
   PantryInput,
+} from './PantryStyles';
+import {
   EntryContainer,
   CheckBox,
-  EntryName,
-  EntryAmount,
-} from './PantryStyles';
+} from '../Entry/EntryStyles';
+import Entry from '../Entry/Entry';
 
 const Pantry = (props) => {
   const {
     pantryEntries,
+    deleteEntry,
   } = props;
-
-  //TODO props checked
-  const checkBox = props.checked ? (<CheckBox><div>X</div></CheckBox>) : (<CheckBox />);
 
   return (
     <PantryContainer>
       {
         pantryEntries.map(entry => (
-          <EntryContainer>
-            {checkBox}
-            <EntryName>
-              {entry.name}
-            </EntryName>
-            <EntryAmount>
-              {`${entry.amount} ${entry.unit}`}
-            </EntryAmount>
-          </EntryContainer>
+          <Entry
+            name={entry.name}
+            amount={entry.amount}
+            unit={entry.unit}
+            deleteEntry={deleteEntry}
+            key={entry.id}
+          />
         ))
       }
       <EntryContainer>
-        {checkBox}
+        <CheckBox />
         <PantryInput type="text" />
       </EntryContainer>
     </PantryContainer>
@@ -44,4 +41,5 @@ export default Pantry;
 
 Pantry.propTypes = {
   pantryEntries: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteEntry: PropTypes.func.isRequired,
 };

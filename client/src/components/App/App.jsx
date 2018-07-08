@@ -12,14 +12,25 @@ class App extends React.Component {
           name: 'Split Peas',
           amount: 1,
           unit: 'cup',
+          id: 1,
         },
         {
           name: 'Tagliatelle',
           amount: 8,
           unit: 'oz',
+          id: 2,
         },
       ],
     };
+    this.deleteEntry = this.deleteEntry.bind(this);
+  }
+
+  deleteEntry(name) {
+    let pantryEntries = this.state.pantryEntries;
+    pantryEntries = pantryEntries.filter(entry => entry.name !== name);
+    this.setState({
+      pantryEntries,
+    });
   }
 
   render() {
@@ -32,7 +43,7 @@ class App extends React.Component {
         <h1>
           Pantry
         </h1>
-        <Pantry pantryEntries={pantryEntries} />
+        <Pantry pantryEntries={pantryEntries} deleteEntry={this.deleteEntry} />
       </AppContainer>
     );
   }
