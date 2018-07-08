@@ -14,6 +14,7 @@ const Pantry = (props) => {
   const {
     pantryEntries,
     deleteEntry,
+    editEntry,
   } = props;
 
   return (
@@ -25,7 +26,9 @@ const Pantry = (props) => {
             amount={entry.amount}
             unit={entry.unit}
             deleteEntry={deleteEntry}
+            editEntry={editEntry}
             key={entry.id}
+            id={entry.id}
           />
         ))
       }
@@ -42,4 +45,5 @@ export default Pantry;
 Pantry.propTypes = {
   pantryEntries: PropTypes.arrayOf(PropTypes.object).isRequired,
   deleteEntry: PropTypes.func.isRequired,
+  editEntry: PropTypes.func.isRequired,
 };

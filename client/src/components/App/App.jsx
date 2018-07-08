@@ -23,11 +23,26 @@ class App extends React.Component {
       ],
     };
     this.deleteEntry = this.deleteEntry.bind(this);
+    this.editEntry = this.editEntry.bind(this);
   }
 
-  deleteEntry(name) {
+  deleteEntry(id) {
     let pantryEntries = this.state.pantryEntries;
-    pantryEntries = pantryEntries.filter(entry => entry.name !== name);
+    pantryEntries = pantryEntries.filter(entry => entry.id !== id);
+    this.setState({
+      pantryEntries,
+    });
+  }
+
+  editEntry(id, name) {
+    let pantryEntries = this.state.pantryEntries;
+
+    for (let i = 0; i < pantryEntries.length; i += 1) {
+      if (pantryEntries[i].id === id) {
+        pantryEntries[i].name = name;
+      }
+    }
+
     this.setState({
       pantryEntries,
     });
@@ -43,7 +58,7 @@ class App extends React.Component {
         <h1>
           Pantry
         </h1>
-        <Pantry pantryEntries={pantryEntries} deleteEntry={this.deleteEntry} />
+        <Pantry pantryEntries={pantryEntries} deleteEntry={this.deleteEntry} editEntry={this.editEntry} />
       </AppContainer>
     );
   }

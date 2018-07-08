@@ -51,6 +51,16 @@ const Trash = styled.img`
   cursor: pointer;
 `;
 
+const EditInput = styled.input`
+  outline: none;
+  border: none;
+  font-family: 'Gochi Hand', cursive;
+  font-size: 20px;
+  margin-left: 10px;
+  letter-spacing: 2px;
+  width: 150px; 
+`;
+
 module.exports = {
   EntryContainer,
   CheckBox,
@@ -60,4 +70,5 @@ module.exports = {
   InfoContainer,
   Edit,
   Trash,
+  EditInput,
 };
