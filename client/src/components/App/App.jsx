@@ -8,7 +8,6 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      pantryId: 0,
       pantryEntries: [],
     };
     this.deleteEntry = this.deleteEntry.bind(this);
@@ -28,29 +27,22 @@ class App extends React.Component {
   deleteEntry(ingredientId) {
     const { pantryId } = this.state;
     Axios.delete(`/api/pantry/${pantryId}/${ingredientId}`)
-      .then(() => { this.getPantry(pantryId) })
+      .then(() => this.getPantry(pantryId))
+      .catch(err => console.log('ERROR DELETING INGREDIENT:', err));
   }
 
-  editEntry(id, name) {
-    let pantryEntries = this.state.pantryEntries;
-
-    for (let i = 0; i < pantryEntries.length; i += 1) {
-      if (pantryEntries[i].id === id) {
-        pantryEntries[i].name = name;
-      }
-    }
-
-    this.setState({ pantryEntries });
+  editEntry(ingredientId, name) {
+    const { pantryId } = this.state;
+    Axios.put(`/api/pantry/${pantryId}/${ingredientId}`, {name})
+      .then(() => this.getPantry(pantryId))
+      .catch(err => console.log('ERROR UPDATING INGREDIENT:', err));
   }
 
   addEntry(name) {
-    const { pantryEntries } = this.state;
-    pantryEntries.push({
-      ingredient_id: 3,
-      name,
-    });
-
-    this.setState({ pantryEntries });
+    const { pantryId } = this.state;
+    Axios.post(`/api/pantry/${pantryId}`, {name})
+      .then(() => this.getPantry(pantryId))
+      .catch(err => console.log('ERROR ADDING ENTRY:', err));
   }
 
   getPantry(pantryId) {
@@ -58,10 +50,6 @@ class App extends React.Component {
       .then(result => this.setState({ pantryEntries: result.data }))
       .catch(err => console.log('ERROR GETTING PANTRY:', err));
   }
-
-  // addIngredient(pantryId, name) {
-  //   Axios.post('/api/ingredients', this.pantryEntries)
-  // }
 
   render() {
     const {

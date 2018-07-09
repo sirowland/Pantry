@@ -10,14 +10,16 @@ class Pantry extends React.Component {
 
     this.state = {
       newEntryValue: '',
+      alreadyInPantry: null,
     };
   }
 
   checkEnter(e) {
     const { addEntry } = this.props;
-    const { newEntryValue } = this.state;
-    if (e.keyCode === 13) {
-      addEntry(newEntryValue);
+    const { alreadyInPantry } = this.state;
+
+    if (e.keyCode === 13 && alreadyInPantry === false) {
+      addEntry(e.target.value);
       this.setState({
         newEntryValue: '',
       });
@@ -25,9 +27,25 @@ class Pantry extends React.Component {
   }
 
   updateEntryName(e) {
-    this.setState({
-      newEntryValue: e.target.value,
-    });
+    const { pantryEntries } = this.props;
+    const alreadyInPantry = pantryEntries.filter(entry => entry.name === e.target.value)[0];
+
+    if (e.target.value === '') {
+      this.setState({
+        alreadyInPantry: null,
+        newEntryValue: e.target.value,
+      })
+    } else if (alreadyInPantry === undefined) {
+      this.setState({
+        alreadyInPantry: false,
+        newEntryValue: e.target.value,
+      });
+    } else if (alreadyInPantry !== undefined) {
+      this.setState({
+        alreadyInPantry: true,
+        newEntryValue: e.target.value,
+      });
+    }
   }
 
   render() {
@@ -37,7 +55,14 @@ class Pantry extends React.Component {
       editEntry,
     } = this.props;
 
-    const { newEntryValue } = this.state;
+    const { newEntryValue, alreadyInPantry } = this.state;
+    let validInput;
+
+    if (alreadyInPantry ===  null || !alreadyInPantry) {
+      validInput = null;
+    } else if (alreadyInPantry) {
+      validInput = (<span style={{color:'red'}}>NOPE</span>)
+    }
 
     return (
       <PantryContainer>
@@ -56,10 +81,11 @@ class Pantry extends React.Component {
           <CheckBox />
           <PantryInput
             type="text"
-            onChange={e => this.updateEntryName(e)}
             onKeyDown={e => this.checkEnter(e)}
+            onChange={e => this.updateEntryName(e)}
             value={newEntryValue}
           />
+          {validInput}
         </NewEntry>
       </PantryContainer>
     );

@@ -5,11 +5,25 @@ const client = new Client({
 });
 client.connect();
 
-// const addIngredient = (ingredient) => {
-//   console.log(ingredient);
-//   const selectIds = `SELECT id, name ingredients WHERE name=${ingredient});`;
-//   // return client.query(selectIds)
-// };
+const addPantryEntry = (pantryId, ingredientName) => {
+  let ingredientId;
+
+  return client.query(`SELECT id, name FROM ingredients WHERE name='${ingredientName}';`)
+    .then(result => {
+      ingredientId = result.rows[0] ? result.rows[0].id : undefined;
+
+      if (ingredientId) {
+        return client.query(`INSERT INTO pantries (pantry_id, ingredient_id) VALUES (${pantryId},${ingredientId})`)
+      } else {
+        return client.query(`INSERT INTO ingredients (name) VALUES ('${ingredientName}') RETURNING id`)
+          .then((result) => client.query(`INSERT INTO pantries (pantry_id, ingredient_id) VALUES (${pantryId},${result.rows[0].id})`));
+      }
+    })
+};
+
+const updatePantryEntry = (ingredientId, ingredientName) => {
+  return client.query(`UPDATE ingredients SET name='${ingredientName}' WHERE id=${ingredientId}`)
+}
 
 const getPantry = (pantryId) => {
   const selectPantryQuery = `
@@ -25,7 +39,7 @@ const getPantry = (pantryId) => {
   return client.query(selectPantryQuery);
 }
 
-const deleteEntry = (pantryId, ingredientId) => {
+const deletePantryEntry = (pantryId, ingredientId) => {
   const deleteEntryQuery = `
     DELETE FROM pantries p 
     WHERE p.pantry_id=${pantryId} 
@@ -36,7 +50,8 @@ const deleteEntry = (pantryId, ingredientId) => {
 }
 
 module.exports = {
-  // addIngredient,
+  addPantryEntry,
+  updatePantryEntry,
   getPantry,
-  deleteEntry,
+  deletePantryEntry,
 }
