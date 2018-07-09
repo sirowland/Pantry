@@ -5,14 +5,14 @@ const client = new Client({
 });
 client.connect();
 
-const addIngredient = (ingredient) => {
-  console.log(ingredient);
-  const selectIds = `SELECT id, name ingredients WHERE name=${ingredient});`;
-  // return client.query(selectIds)
-};
+// const addIngredient = (ingredient) => {
+//   console.log(ingredient);
+//   const selectIds = `SELECT id, name ingredients WHERE name=${ingredient});`;
+//   // return client.query(selectIds)
+// };
 
 const getPantry = (pantryId) => {
-  const selectPantry = `
+  const selectPantryQuery = `
     SELECT
     i.id as ingredient_id,
     i.name
@@ -22,10 +22,21 @@ const getPantry = (pantryId) => {
     WHERE p.pantry_id=${pantryId};
   `;
 
-  return client.query(selectPantry);
+  return client.query(selectPantryQuery);
+}
+
+const deleteEntry = (pantryId, ingredientId) => {
+  const deleteEntryQuery = `
+    DELETE FROM pantries p 
+    WHERE p.pantry_id=${pantryId} 
+    AND p.ingredient_id = ${ingredientId} 
+  `;
+
+  return client.query(deleteEntryQuery);
 }
 
 module.exports = {
-  addIngredient,
+  // addIngredient,
   getPantry,
+  deleteEntry,
 }

@@ -12,7 +12,13 @@ app.use(bodyParser.json());
 app.get('/api/pantry/:id', (req, res) => {
   db.getPantry(req.params.id)
     .then(results => res.send(results.rows))
-    .catch(err => console.log(err));
+    .catch(err => console.log('ERROR GETTING PANTRY:', err));
+});
+
+app.delete('/api/pantry/:id/:ingredientId', (req, res) => {
+  db.deleteEntry(req.params.id, req.params.ingredientId)
+    .then(() => res.send())
+    .catch(err => console.log('ERROR DELETING INGREDIENT:', err));
 });
 
 // app.post('/api/ingredients', (req, res) => {

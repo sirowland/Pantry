@@ -8,17 +8,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      pantryid: 1,
-      pantryEntries: [
-        {
-          name: 'Split Peas',
-          ingredient_id: 1,
-        },
-        {
-          name: 'Tagliatelle',
-          ingredient_id: 2,
-        },
-      ],
+      pantryId: 0,
+      pantryEntries: [],
     };
     this.deleteEntry = this.deleteEntry.bind(this);
     this.editEntry = this.editEntry.bind(this);
@@ -29,14 +20,15 @@ class App extends React.Component {
     const url = window.location.pathname;
     const pantryId = url.split('/')[2];
     this.getPantry(pantryId)
+    this.setState({
+      pantryId,
+    })
   }
 
-  deleteEntry(id) {
-    let pantryEntries = this.state.pantryEntries;
-    pantryEntries = pantryEntries.filter(entry => entry.id !== id);
-    this.setState({
-      pantryEntries,
-    });
+  deleteEntry(ingredientId) {
+    const { pantryId } = this.state;
+    Axios.delete(`/api/pantry/${pantryId}/${ingredientId}`)
+      .then(() => { this.getPantry(pantryId) })
   }
 
   editEntry(id, name) {
@@ -48,9 +40,7 @@ class App extends React.Component {
       }
     }
 
-    this.setState({
-      pantryEntries,
-    });
+    this.setState({ pantryEntries });
   }
 
   addEntry(name) {
@@ -60,18 +50,12 @@ class App extends React.Component {
       name,
     });
 
-    this.setState({
-      pantryEntries,
-    });
+    this.setState({ pantryEntries });
   }
 
   getPantry(pantryId) {
     Axios.get(`/api/pantry/${pantryId}`)
-      .then(result => {
-        this.setState({
-          pantryEntries: result.data,
-        })
-      })
+      .then(result => this.setState({ pantryEntries: result.data }))
       .catch(err => console.log('ERROR GETTING PANTRY:', err));
   }
 
