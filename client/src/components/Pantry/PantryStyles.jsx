@@ -10,9 +10,10 @@ const PantryContainer = styled.div`
   overflow: scroll;
 `;
 
-const EntryContainer = styled.div`
+const NewEntry = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   margin: 10px;
   font-size: 20px;
   letter-spacing: 2px;
@@ -40,21 +41,9 @@ const CheckBox = styled.div`
   cursor: pointer;
 `;
 
-const EntryAmount = styled.div`
-  margin-left: 30px;
-  margin-right: 10px;
-`;
-
-const EntryName = styled.div`
-  margin-left: 10px;
-  margin-right: 10px;
-`;
-
 module.exports = {
   PantryContainer,
   PantryInput,
-  EntryContainer,
+  NewEntry,
   CheckBox,
-  EntryAmount,
-  EntryName,
 };

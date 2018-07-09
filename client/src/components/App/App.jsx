@@ -10,20 +10,17 @@ class App extends React.Component {
       pantryEntries: [
         {
           name: 'Split Peas',
-          amount: 1,
-          unit: 'cup',
           id: 1,
         },
         {
           name: 'Tagliatelle',
-          amount: 8,
-          unit: 'oz',
           id: 2,
         },
       ],
     };
     this.deleteEntry = this.deleteEntry.bind(this);
     this.editEntry = this.editEntry.bind(this);
+    this.addEntry = this.addEntry.bind(this);
   }
 
   deleteEntry(id) {
@@ -48,6 +45,18 @@ class App extends React.Component {
     });
   }
 
+  addEntry(name) {
+    const { pantryEntries } = this.state;
+    pantryEntries.push({
+      id: 3,
+      name,
+    });
+
+    this.setState({
+      pantryEntries,
+    });
+  }
+
   render() {
     const {
       pantryEntries,
@@ -58,7 +67,13 @@ class App extends React.Component {
         <h1>
           Pantry
         </h1>
-        <Pantry pantryEntries={pantryEntries} deleteEntry={this.deleteEntry} editEntry={this.editEntry} />
+        <Pantry
+          pantryEntries={pantryEntries}
+          deleteEntry={this.deleteEntry}
+          editEntry={this.editEntry}
+          addEntry={this.addEntry}
+          value=""
+        />
       </AppContainer>
     );
   }

@@ -22,11 +22,6 @@ const CheckBox = styled.div`
   cursor: pointer;
 `;
 
-const EntryAmount = styled.div`
-  margin-left: 30px;
-  margin-right: 10px;
-`;
-
 const EntryName = styled.div`
   margin-left: 10px;
   margin-right: 10px;
@@ -64,7 +59,6 @@ const EditInput = styled.input`
 module.exports = {
   EntryContainer,
   CheckBox,
-  EntryAmount,
   EntryName,
   ToolsContainer,
   InfoContainer,

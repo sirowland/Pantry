@@ -4,7 +4,6 @@ import {
   EntryContainer,
   CheckBox,
   EntryName,
-  EntryAmount,
   ToolsContainer,
   InfoContainer,
   Edit,
@@ -51,8 +50,6 @@ class Entry extends React.Component {
   render() {
     const {
       name,
-      amount,
-      unit,
       deleteEntry,
       id,
     } = this.props;
@@ -99,9 +96,6 @@ class Entry extends React.Component {
         <InfoContainer>
           {checkBox}
           {entryName}
-          <EntryAmount>
-            {`${amount} ${unit}`}
-          </EntryAmount>
         </InfoContainer>
         {tools}
       </EntryContainer>
@@ -113,8 +107,6 @@ export default Entry;
 
 Entry.propTypes = {
   name: PropTypes.string.isRequired,
-  amount: PropTypes.number,
-  unit: PropTypes.string,
   deleteEntry: PropTypes.func.isRequired,
   editEntry: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
