@@ -1,5 +1,6 @@
 import React from 'react';
 import Pantry from '../Pantry/Pantry';
+import Axios from 'axios';
 import { AppContainer } from './AppStyles';
 
 class App extends React.Component {
@@ -7,20 +8,27 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      pantryid: 1,
       pantryEntries: [
         {
           name: 'Split Peas',
-          id: 1,
+          ingredient_id: 1,
         },
         {
           name: 'Tagliatelle',
-          id: 2,
+          ingredient_id: 2,
         },
       ],
     };
     this.deleteEntry = this.deleteEntry.bind(this);
     this.editEntry = this.editEntry.bind(this);
     this.addEntry = this.addEntry.bind(this);
+  }
+
+  componentDidMount() {
+    const url = window.location.pathname;
+    const pantryId = url.split('/')[2];
+    this.getPantry(pantryId)
   }
 
   deleteEntry(id) {
@@ -48,7 +56,7 @@ class App extends React.Component {
   addEntry(name) {
     const { pantryEntries } = this.state;
     pantryEntries.push({
-      id: 3,
+      ingredient_id: 3,
       name,
     });
 
@@ -56,6 +64,20 @@ class App extends React.Component {
       pantryEntries,
     });
   }
+
+  getPantry(pantryId) {
+    Axios.get(`/api/pantry/${pantryId}`)
+      .then(result => {
+        this.setState({
+          pantryEntries: result.data,
+        })
+      })
+      .catch(err => console.log('ERROR GETTING PANTRY:', err));
+  }
+
+  // addIngredient(pantryId, name) {
+  //   Axios.post('/api/ingredients', this.pantryEntries)
+  // }
 
   render() {
     const {

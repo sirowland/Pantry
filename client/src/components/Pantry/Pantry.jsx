@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  PantryContainer,
-  PantryInput,
-  NewEntry,
-} from './PantryStyles';
-import {
-  EntryContainer,
-  CheckBox,
-} from '../Entry/EntryStyles';
+import { PantryContainer, PantryInput, NewEntry } from './PantryStyles';
+import { CheckBox } from '../Entry/EntryStyles';
 import Entry from '../Entry/Entry';
 
 class Pantry extends React.Component {
@@ -54,8 +47,8 @@ class Pantry extends React.Component {
               name={entry.name}
               deleteEntry={deleteEntry}
               editEntry={editEntry}
-              key={entry.id}
-              id={entry.id}
+              key={entry.ingredient_id}
+              id={entry.ingredient_id}
             />
           ))
         }
