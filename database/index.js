@@ -22,8 +22,8 @@ const addPantryEntry = (pantryId, ingredientName) => {
 };
 
 const updatePantryEntry = (ingredientId, ingredientName) => {
-  return client.query(`UPDATE ingredients SET name='${ingredientName}' WHERE id=${ingredientId}`)
-}
+  return client.query(`UPDATE ingredients SET name='${ingredientName}' WHERE id=${ingredientId}`);
+};
 
 const getPantry = (pantryId) => {
   const selectPantryQuery = `
@@ -37,7 +37,7 @@ const getPantry = (pantryId) => {
   `;
 
   return client.query(selectPantryQuery);
-}
+};
 
 const deletePantryEntry = (pantryId, ingredientId) => {
   const deleteEntryQuery = `
@@ -47,11 +47,11 @@ const deletePantryEntry = (pantryId, ingredientId) => {
   `;
 
   return client.query(deleteEntryQuery);
-}
+};
 
 module.exports = {
   addPantryEntry,
   updatePantryEntry,
   getPantry,
   deletePantryEntry,
-}
+};
