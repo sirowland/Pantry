@@ -17,13 +17,20 @@ class RecipeList extends React.Component {
   }
 
   render() {
-    const { recipes } = this.props;
+    const { recipes, openModal } = this.props;
     const { recipesOpen } = this.state;
 
     const recipesContainer = recipesOpen
       ? (
         <RecipesContainer>
-          { recipes.map(recipe => <Recipe name={recipe.name} />) }
+          { recipes.map(recipe => (
+            <Recipe
+              name={recipe.name}
+              openModal={openModal}
+              key={recipe.recipe_id}
+              id={recipe.recipe_id}
+            />
+          ))}
         </RecipesContainer>
       )
       : null;
@@ -43,4 +50,5 @@ export default RecipeList;
 
 RecipeList.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  openModal: PropTypes.func.isRequired,
 };

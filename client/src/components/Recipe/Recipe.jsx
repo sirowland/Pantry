@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   RecipeContainer,
   RecipeName,
@@ -6,20 +7,22 @@ import {
   RecipePlusButtonContainer
 } from './RecipeStyles';
 
-class Recipe extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const Recipe = (props) => {
+  const { name, openModal, id } = props;
 
-  render() {
-    return (
-      <RecipeContainer>
-        <RecipeName>
-          {this.props.name}
-        </RecipeName>
-      </RecipeContainer>
-    );
-  }
-}
+  return (
+    <RecipeContainer onClick={() => openModal(id)}>
+      <RecipeName>
+        {name}
+      </RecipeName>
+    </RecipeContainer>
+  );
+};
 
 export default Recipe;
+
+Recipe.propTypes = {
+  name: PropTypes.string.isRequired,
+  openModal: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+};
