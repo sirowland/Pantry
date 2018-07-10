@@ -28,11 +28,35 @@ const ModalContentsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: scroll;
+  text-align: left;
+  font-family: 'Gochi Hand', cursive;
+  font-size: 20px;
 `;
 
 const ModalRecipeContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
+  width: 50%;
+  text-align: center;
+`;
+
+const ModalRecipeName = styled.div`
+  font-family: 'Gochi Hand', cursive;
+  font-size: 40px;
+  letter-spacing: 3px;
+`;
+
+const ModalRecipeIngredients = styled.ul`
+  font-family: 'Gochi Hand', cursive;
+  font-size: 25px;
+  letter-spacing: 3px;
+  text-align: left;
+`;
+
+const ModalRecipeInstructions = styled.p`
+  font-family: 'Gochi Hand', cursive;
+  font-size: 15px;
+  letter-spacing: 1px;
 `;
 
 module.exports = {
@@ -40,4 +64,7 @@ module.exports = {
   ModalCloseButton,
   ModalContentsContainer,
   ModalRecipeContainer,
+  ModalRecipeName,
+  ModalRecipeIngredients,
+  ModalRecipeInstructions,
 };
