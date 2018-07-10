@@ -3,19 +3,40 @@ import PropTypes from 'prop-types';
 import Recipe from '../Recipe/Recipe';
 import { RecipeListSectionContainer, RecipesContainer, GetRecipesButton } from './RecipeListStyles';
 
-const RecipeList = (props) => {
-  const { recipes } = props;
+class RecipeList extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <RecipeListSectionContainer>
-      <GetRecipesButton>
-        Get Recipes!
-      </GetRecipesButton>
-      <RecipesContainer>
-        { recipes.map(recipe => <Recipe name={recipe.name} />) }
-      </RecipesContainer>
-    </RecipeListSectionContainer>
-  );
+    this.state = {
+      recipesOpen: false,
+    };
+  }
+
+  openRecipes() {
+    this.setState({ recipesOpen: true });
+  }
+
+  render() {
+    const { recipes } = this.props;
+    const { recipesOpen } = this.state;
+
+    const recipesContainer = recipesOpen
+      ? (
+        <RecipesContainer>
+          { recipes.map(recipe => <Recipe name={recipe.name} />) }
+        </RecipesContainer>
+      )
+      : null;
+
+    return (
+      <RecipeListSectionContainer>
+        <GetRecipesButton onClick={() => this.openRecipes()}>
+          Get Recipes!
+        </GetRecipesButton>
+        {recipesContainer}
+      </RecipeListSectionContainer>
+    );
+  }
 };
 
 export default RecipeList;

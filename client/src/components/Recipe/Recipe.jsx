@@ -1,5 +1,10 @@
 import React from 'react';
-import { RecipeContainer } from './RecipeStyles';
+import {
+  RecipeContainer,
+  RecipeName,
+  RecipePlusButton,
+  RecipePlusButtonContainer
+} from './RecipeStyles';
 
 class Recipe extends React.Component {
   constructor(props) {
@@ -9,7 +14,9 @@ class Recipe extends React.Component {
   render() {
     return (
       <RecipeContainer>
-        {this.props.name}
+        <RecipeName>
+          {this.props.name}
+        </RecipeName>
       </RecipeContainer>
     );
   }

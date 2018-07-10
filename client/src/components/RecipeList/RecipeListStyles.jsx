@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const RecipeListSectionContainer = styled.div`
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   height: 350px;
   display: flex;
   flex-direction: column;

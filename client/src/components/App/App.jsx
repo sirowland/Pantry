@@ -79,6 +79,26 @@ class App extends React.Component {
     this.setState({ pantryId });
   }
 
+  getPantry(pantryId) {
+    axios.get(`/api/pantry/${pantryId}`)
+      .then(result => this.setState({ pantryEntries: result.data }))
+      .catch(err => console.log('ERROR GETTING PANTRY:', err));
+  }
+
+  addEntry(name) {
+    const { pantryId } = this.state;
+    axios.post(`/api/pantry/${pantryId}`, { name })
+      .then(() => this.getPantry(pantryId))
+      .catch(err => console.log('ERROR ADDING ENTRY:', err));
+  }
+
+  editEntry(ingredientId, name) {
+    const { pantryId } = this.state;
+    axios.put(`/api/pantry/${pantryId}/${ingredientId}`, { name })
+      .then(() => this.getPantry(pantryId))
+      .catch(err => console.log('ERROR UPDATING INGREDIENT:', err));
+  }
+
   deleteEntry(ingredientId) {
     const { pantryId } = this.state;
     axios.delete(`/api/pantry/${pantryId}/${ingredientId}`)
@@ -86,25 +106,6 @@ class App extends React.Component {
       .catch(err => console.log('ERROR DELETING INGREDIENT:', err));
   }
 
-  editEntry(ingredientId, name) {
-    const { pantryId } = this.state;
-    axios.put(`/api/pantry/${pantryId}/${ingredientId}`, {name})
-      .then(() => this.getPantry(pantryId))
-      .catch(err => console.log('ERROR UPDATING INGREDIENT:', err));
-  }
-
-  addEntry(name) {
-    const { pantryId } = this.state;
-    axios.post(`/api/pantry/${pantryId}`, {name})
-      .then(() => this.getPantry(pantryId))
-      .catch(err => console.log('ERROR ADDING ENTRY:', err));
-  }
-
-  getPantry(pantryId) {
-    axios.get(`/api/pantry/${pantryId}`)
-      .then(result => this.setState({ pantryEntries: result.data }))
-      .catch(err => console.log('ERROR GETTING PANTRY:', err));
-  }
 
   render() {
     const {
