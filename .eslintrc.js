@@ -8,6 +8,7 @@ module.exports = {
     "import", 
     "jsx-a11y", 
     "react",
+    "styled-components",
   ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
