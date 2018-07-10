@@ -13,64 +13,7 @@ class App extends React.Component {
 
     this.state = {
       pantryEntries: [],
-      recipes: [
-        {
-          recipe_id: 1,
-          name: 'Chicken Parmesan',
-          percentageMatch: 0.10,
-          ingredients: [
-          {
-            name: 'Chicken Breast',
-            amount: 1,
-            unit: 'pound',
-          },
-          {
-            name: 'Parmesan',
-            amount: .25,
-            unit: 'cup',
-          },
-          {
-            name: 'Marinara',
-            amount: 2,
-            unit: 'cup',
-          },
-          {
-            name: 'Spaghetti',
-            amount: 8,
-            unit: 'ounce',
-          },
-        ],
-          instructions: 'DO THE THING!',
-        },
-        {
-          recipe_id: 2,
-          name: 'Spaghetti Carbonara',
-          percentageMatch: 0.10,
-          ingredients: [
-          {
-            name: 'Guanciale',
-            amount: 1,
-            unit: 'pound',
-          },
-          {
-            name: 'Parmesan',
-            amount: .25,
-            unit: 'cup',
-          },
-          {
-            name: 'Egg',
-            amount: 2,
-            unit: null,
-          },
-          {
-            name: 'Spaghetti',
-            amount: 8,
-            unit: 'ounce',
-          },
-        ],
-          instructions: 'DO THE THING!',
-        },
-      ],
+      recipes: [],
       modalIsOpen: false,
       modalRecipeName: '',
       modalRecipeIngredients: [],
@@ -81,6 +24,7 @@ class App extends React.Component {
     this.addEntry = this.addEntry.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.getRecipes = this.getRecipes.bind(this);
   }
 
   componentDidMount() {
@@ -94,6 +38,13 @@ class App extends React.Component {
     axios.get(`/api/pantry/${pantryId}`)
       .then(result => this.setState({ pantryEntries: result.data }))
       .catch(err => console.log('ERROR GETTING PANTRY:', err));
+  }
+
+  getRecipes() {
+    const { pantryId } = this.state;
+    return axios.get(`/api/pantry/${pantryId}/recipes`)
+      .then(result => this.setState({ recipes: result.data }))
+      .catch(err => console.log('ERROR GETTING RECIPES', err));
   }
 
   addEntry(name) {
@@ -132,7 +83,7 @@ class App extends React.Component {
 
   populateModal(recipeId) {
     const { recipes } = this.state;
-    const modalRecipe = recipes.filter(recipe => recipe.recipe_id === recipeId)[0];
+    const modalRecipe = recipes.filter(recipe => recipe.recipeId === recipeId)[0];
 
     return this.setState({
       modalRecipeName: modalRecipe.name,
@@ -140,6 +91,7 @@ class App extends React.Component {
       modalRecipeInstructions: modalRecipe.instructions,
     });
   }
+
 
   render() {
     const {
@@ -164,8 +116,10 @@ class App extends React.Component {
           <ModalContentsContainer>
             <ModalRecipeContainer>
               <div>{modalRecipeName}</div>
+              Ingredients:
               <ul>
                 {modalRecipeIngredients.map((ingredient) => {
+                  console.log(ingredient);
                   if (ingredient.amount > 1) {
                     if (ingredient.unit === null) {
                       return (<li>{ingredient.amount} {ingredient.name}s</li>)
@@ -195,6 +149,7 @@ class App extends React.Component {
         />
         <RecipeList
           recipes={recipes}
+          getRecipes={this.getRecipes}
           openModal={this.handleOpenModal}
         />
       </AppContainer>
