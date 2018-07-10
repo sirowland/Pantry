@@ -24,6 +24,11 @@ app.post('/api/pantry/:id', (req, res) => {
     .then(() => res.send());
 });
 
+app.get('/api/pantry/:id/recipes', (req, res) => {
+  db.getRecipesInOrder(req.params.id)
+    .then(results => res.send(results));
+});
+
 app.put('/api/pantry/:id/:ingredientId', (req, res) => {
   db.updatePantryEntry(req.params.ingredientId, req.body.name)
     .then(() => res.send());

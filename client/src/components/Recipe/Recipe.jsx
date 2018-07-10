@@ -8,13 +8,14 @@ import {
 } from './RecipeStyles';
 
 const Recipe = (props) => {
-  const { name, openModal, id } = props;
+  const { name, openModal, id, possessionCountStr, possessionCountPercentage } = props;
 
   return (
     <RecipeContainer onClick={() => openModal(id)}>
       <RecipeName>
         {name}
       </RecipeName>
+      <div>{possessionCountStr}</div>
     </RecipeContainer>
   );
 };
@@ -25,4 +26,6 @@ Recipe.propTypes = {
   name: PropTypes.string.isRequired,
   openModal: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
+  possessionCountStr: PropTypes.string.isRequired,
+  possessionCountPercentage: PropTypes.number.isRequired,
 };

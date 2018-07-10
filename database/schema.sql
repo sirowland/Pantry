@@ -5,29 +5,29 @@ DROP TABLE IF EXISTS recipes;
 
 CREATE TABLE ingredients (
   id SERIAL PRIMARY KEY,
-  name varchar(100)
+  name VARCHAR(100)
 );
 
 CREATE TABLE recipes (
   id SERIAL PRIMARY KEY,
-  name varchar(100),
-  author varchar(50),
-  instructions varchar(5000)
+  name VARCHAR(100),
+  author VARCHAR(50),
+  instructions VARCHAR(5000)
 );
 
 CREATE TABLE pantries (
   row_id SERIAL PRIMARY KEY,
-  pantry_id int,
-  ingredient_id int,
+  pantry_id INT,
+  ingredient_id INT,
   FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
 );
 
 CREATE TABLE ingredients_recipes_join (
   id SERIAL PRIMARY KEY,
-  ingredient_id int,
-  recipe_id int,
-  amount int,
-  unit varchar(10),
+  ingredient_id INT,
+  recipe_id INT,
+  amount DECIMAL,
+  unit VARCHAR(10),
   FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE,
   FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE
 );

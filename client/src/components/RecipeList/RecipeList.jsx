@@ -12,8 +12,14 @@ class RecipeList extends React.Component {
     };
   }
 
-  openRecipes() {
-    this.setState({ recipesOpen: true });
+  async openRecipes() {
+    const { getRecipes } = this.props;
+    try {
+      await getRecipes();
+      this.setState({ recipesOpen: true });
+    } catch (err) {
+      console.log('ERROR GETTING RECIPES inside RecipeList', err);
+    }
   }
 
   render() {
@@ -27,8 +33,10 @@ class RecipeList extends React.Component {
             <Recipe
               name={recipe.name}
               openModal={openModal}
-              key={recipe.recipe_id}
-              id={recipe.recipe_id}
+              key={recipe.recipeId}
+              possessionCountStr={recipe.ingredientPossessionCount + '/' + recipe.ingredients.length}
+              possessionCountPercentage={Math.floor(100 * (recipe.ingredientPossessionCount / recipe.ingredients.length))}
+              id={recipe.recipeId}
             />
           ))}
         </RecipesContainer>
@@ -51,4 +59,5 @@ export default RecipeList;
 RecipeList.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
   openModal: PropTypes.func.isRequired,
+  getRecipes: PropTypes.func.isRequired,
 };
