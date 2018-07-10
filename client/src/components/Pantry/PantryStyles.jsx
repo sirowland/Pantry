@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const PantryContainer = styled.div`
   width: 450px;
-  height: 300px;
+  height: 250px;
   background-color: white;
   border-radius: 5px;
   border: 10px solid #BEBEBE;

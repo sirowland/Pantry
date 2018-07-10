@@ -1,5 +1,5 @@
 {
-  "name": "PowDays",
+  "name": "Pantry",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -32,6 +32,7 @@
     "prop-types": "^15.6.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-modal": "^3.5.1",
     "styled-components": "^3.3.3"
   }
 }
